@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moroz Yaroslav Test !</title>
+    <script>
+        /*-----------------Задача 1-----------------*/
+        function foo(mas){
+            let arr = new Array();
+            for(let i=0; i<mas.length-2;i++){
+                if(mas[i]>mas[i+1]){
+                    if(mas[i+1]<mas[i+2]){
+                        arr[i]=1;
+                    }
+                    else{
+                        arr[i]=0;
+                    }
+                }
+                else if(mas[i]<mas[i+1]){
+                    if(mas[i+1]>mas[i+2]){
+                        arr[i]=1;
+                    }
+                    else{
+                        arr[i]=0;
+                    }
+                }
+                else{
+                    arr[i]=0;
+                }
+            }
+            return arr;
+        }
+        var massiv = new Array(1,3,5,4,5,7);
+        document.write(massiv);
+        var noviy = foo(massiv);
+        document.write("<br>"+noviy);
+
+        /*-----------------Задача 2-----------------*/
+        function findArea(mtx){
+            //переводим из матрицы в одномерный массив
+            //mtx[i][j], где i - строки, j - столбцы
+            var t=0;
+            var result=[];
+            var n_mtx = new Array(new Array());
+
+            for(let k=0; k<mtx[0].length-2;k++){
+                n_mtx[k] = [];  
+                for(let i=0; i<mtx.length;i++){                           
+                    for(let j=k; j<k+3; j++){
+                        n_mtx[k][t] = mtx[i][j];
+                        t++;
+                        if(t==9)
+                            t=0;
+                    }
+                }
+            }
+            for(let i=0;i<n_mtx.length;i++){
+                n_mtx[i].sort();//сортируем по порядку
+            }
+
+            for(let i=0;i<n_mtx.length;i++){
+                result[i]=true;
+                for(let j=0;j<9;j++){
+                    if(n_mtx[i][j]!=j+1)
+                    {
+                        result[i]=false;
+                        break;
+                    }
+                }
+            }
+            
+            return result;
+        }
+        var entryData =[[1,2,3,2,7],
+                        [4,5,6,8,1],
+                        [7,8,9,4,5]];
+        
+        var check = findArea(entryData); 
+
+        document.write("<br>"+check);  
+        
+        document.write("<br>");  
+        /*-----------------Задача 3-----------------*/
+        function edit(mtx,keys){
+            var result=[];
+            var k=0, i=0;
+            mtx.forEach(element => {
+                const str = element.join(' ');
+                const matches = str.match(/.{1,16}(?: |$)/g);   //формируем строки из слов суммарно не более 16 символов каждая          
+                result[k]="";
+                matches.forEach(item => {
+                    result[k]="";
+                    if(keys[i]=="LEFT"){
+                        result[k]+="*"+item;      
+                        while(result[k].length!=16)
+                        {
+                            result[k]+=" ";
+                        }    
+                        result[k]+="*";
+                    }
+                    else if(keys[i]=="RIGHT"){
+                        result[k]+="*";
+                        while(result[k].length != 16 - item.length)
+                        {                                
+                            result[k]+=" ";
+                        }  
+                        result[k]+=item+"*";
+                    }
+                    k++;
+                }
+                    
+                );
+                i++;
+            });          
+
+            return result;
+        }
+        var wordMatrix=[["Hello", "world"],
+                        ["Brad", "came", "to", "dinner", "with", "us"],
+                        ["He", "loves", "tacos"]];
+        var keys =["RIGHT","LEFT","LEFT"];
+
+
+        var resMatrix=edit(wordMatrix, keys);        
+
+        console.log(resMatrix);  
+        document.write("<br>");
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
